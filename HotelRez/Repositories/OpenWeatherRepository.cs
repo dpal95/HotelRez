@@ -1,5 +1,7 @@
 ﻿using Azure;
+using HotelRez.Database;
 using HotelRez.Models;
+using HotelRez.Models.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,8 +22,9 @@ namespace HotelRez.Repositories
         private readonly string _apiKey;
         private readonly string _long;
         private readonly string _lat;
+        private readonly WeatherContext _context;
 
-        public OpenWeatherRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public OpenWeatherRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration, WeatherContext weatherContext)
         {
             _httpClientFactory = httpClientFactory;
             _httpClient = _httpClientFactory.CreateClient("weatherClient");
@@ -31,6 +34,7 @@ namespace HotelRez.Repositories
             _apiKey = _configuration["WeatherApiKey"];
             _long = _configuration["LondonLong"];
             _lat = _configuration["LondonLat"];
+            _context = weatherContext;
         }
 
         public async Task<Current> GetLocationData()
@@ -44,10 +48,27 @@ namespace HotelRez.Repositories
 
             using (TextReader reader = new StringReader(await weatherResp.Content.ReadAsStringAsync()))
             {
-               return (Current)xmlSerializer.Deserialize(reader);
+                return (Current)xmlSerializer.Deserialize(reader);
             }
 
         }
+
+        public async Task<bool> SaveWeatherData(WeatherDto weatherDto)
+        {
+            try
+            {
+                await _context.WeatherEntries.AddAsync(weatherDto);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        
 
         private string BuildRequestUrl()
         {

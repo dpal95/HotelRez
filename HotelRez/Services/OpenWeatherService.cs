@@ -1,4 +1,6 @@
-﻿using HotelRez.Models;
+﻿using HotelRez.Mappers;
+using HotelRez.Models;
+using HotelRez.Models.DTOs;
 using HotelRez.Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,17 +20,23 @@ namespace HotelRez.Services
         }
         public async Task<bool> GetSaveLocationDataHandler()
         {
-            var data = await GetLocationData();         
-            return await SaveLocationData(data);
+            var data = await GetLocationData();
+            var saveData = MapToDBSchema(data);
+            return await SaveLocationData(saveData);
         }
 
         private async Task<Current?> GetLocationData()
         {
           return await _openWeatherRepository.GetLocationData();
         }
-        private async Task<bool> SaveLocationData(Current? data)
+        private async Task<bool> SaveLocationData(WeatherDto data)
         {
+           return await _openWeatherRepository.SaveWeatherData(data);
+        }
 
+        private WeatherDto MapToDBSchema(Current? data)
+        {
+            return WeatherMapper.MapToDto(data);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HotelRez.Models;
+using HotelRez.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace HotelRez.Repositories
     public interface IOpenWeatherRepository
     {
         Task<Current> GetLocationData();
+        Task<bool> SaveWeatherData(WeatherDto weatherDto);
     }
 }

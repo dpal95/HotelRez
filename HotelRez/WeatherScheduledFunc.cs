@@ -21,7 +21,7 @@ namespace HotelRez
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
-            await _openWeatherService.GetLocationDataHandler();
+            await _openWeatherService.GetSaveLocationDataHandler();
             
             if (myTimer.ScheduleStatus is not null)
             {
