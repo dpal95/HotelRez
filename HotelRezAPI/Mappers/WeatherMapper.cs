@@ -1,5 +1,4 @@
-﻿using HotelRez.Models;
-using HotelRez.Models.DTOs;
+﻿
 using HotelRezAPI.Models;
 using System;
 using System.Collections.Generic;

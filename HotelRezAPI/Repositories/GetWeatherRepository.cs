@@ -1,5 +1,4 @@
 ﻿using Azure;
-using HotelRez.Models;
 using HotelRezAPI.Database;
 using HotelRezAPI.Models;
 using Microsoft.Extensions.Configuration;

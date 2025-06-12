@@ -1,5 +1,4 @@
-﻿using HotelRezAPI.Mappers;
-using HotelRezAPI.Models;
+﻿using HotelRezAPI.Models;
 using HotelRezAPI.Models;
 using HotelRezAPI.Repositories;
 using System;
