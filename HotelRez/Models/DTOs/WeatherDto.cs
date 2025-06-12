@@ -15,5 +15,6 @@ namespace HotelRez.Models.DTOs
         public int WindDirection { get; set; }
         public string Description { get; set; }
         public DateTime Timestamp { get; set; }
+        public string City { get; set; }
     }
 }

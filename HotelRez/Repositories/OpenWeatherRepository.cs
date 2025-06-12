@@ -45,7 +45,6 @@ namespace HotelRez.Repositories
 
             weatherResp.EnsureSuccessStatusCode();
 
-
             using (TextReader reader = new StringReader(await weatherResp.Content.ReadAsStringAsync()))
             {
                 return (Current)xmlSerializer.Deserialize(reader);

@@ -20,7 +20,8 @@ namespace HotelRez.Mappers
                 WindSpeed = xml.Wind.Speed.Value,
                 WindDirection = xml.Wind.Direction.Value,
                 Description = xml.Weather.Value,
-                Timestamp = xml.Lastupdate.Value
+                Timestamp = xml.Lastupdate.Value,
+                City = xml.City.Name,
             };
         }
     }
