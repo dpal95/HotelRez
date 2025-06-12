@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace HotelRez.Services
 {
-    internal interface IOpenWeatherService
+    public interface IOpenWeatherService
     {
+        Task<bool> GetSaveLocationDataHandler();
     }
 }

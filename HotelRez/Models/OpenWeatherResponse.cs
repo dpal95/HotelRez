@@ -7,14 +7,6 @@ using System.Xml.Serialization;
 
 namespace HotelRez.Models
 {
-    internal class OpenWeatherResponse
-    {
-        // using System.Xml.Serialization;
-        // XmlSerializer serializer = new XmlSerializer(typeof(Current));
-        // using (StringReader reader = new StringReader(xml))
-        // {
-        //    var test = (Current)serializer.Deserialize(reader);
-        // }
 
         [XmlRoot(ElementName = "coord")]
         public class Coord
@@ -75,7 +67,7 @@ namespace HotelRez.Models
             public double Min { get; set; }
 
             [XmlAttribute(AttributeName = "max")]
-            public DateTime Max { get; set; }
+            public double Max { get; set; }
 
             [XmlAttribute(AttributeName = "unit")]
             public string Unit { get; set; }
@@ -258,4 +250,4 @@ namespace HotelRez.Models
         }
 
     }
-}
+
