@@ -1,6 +1,8 @@
-﻿using HotelRezAPI.Models;
+﻿using HotelRez.Mappers;
+using HotelRezAPI.Models;
 using HotelRezAPI.Models;
 using HotelRezAPI.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +20,31 @@ namespace HotelRezAPI.Services
         {
             _openWeatherRepository = openWeatherRepository;
         }
-        public IEnumerable<WeatherDto> GetLocationData(string city)
+        public IActionResult GetLocationData(string city)
         {
-           return _openWeatherRepository.GetLocationData(city);
-     
+            try
+            {
+                var resp = _openWeatherRepository.GetLocationData(city);
+
+                if (resp == null || resp.Count() == 0)
+                {
+                    return new NotFoundObjectResult($"No weather data found for '{city}'.");
+                }
+
+                string xml = WeatherMapper.SerializeToXml(resp);
+
+                return new ContentResult
+                {
+                    Content = xml,
+                    ContentType = "application/xml",
+                    StatusCode = (int)HttpStatusCode.OK
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+
         } 
     }
 }

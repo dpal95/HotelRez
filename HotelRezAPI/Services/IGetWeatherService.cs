@@ -1,4 +1,5 @@
 ﻿using HotelRezAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace HotelRezAPI.Services
 {
     public interface IGetWeatherService
     {
-        IEnumerable<WeatherDto> GetLocationData(string city);
+        IActionResult GetLocationData(string city);
     }
 }

@@ -24,7 +24,7 @@ namespace HotelRezAPI.Repositories
 
         public IEnumerable<WeatherDto> GetLocationData(string city)
         {
-           return _context.WeatherEntries.Where(x => x.City == city && x.Timestamp >= DateTime.Now.AddDays(-1));
+           return _context.WeatherEntries.Where(x => x.City == city && x.Timestamp >= DateTime.Now.AddDays(-1)).OrderByDescending(c=>c.Timestamp);
 
         }
     }

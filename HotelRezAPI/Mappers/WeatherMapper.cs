@@ -12,11 +12,13 @@ namespace HotelRez.Mappers
     public static class WeatherMapper
     {      
 
-        public static string SerializeToXml<WeatherDto>(WeatherDto data)
+        public static string SerializeToXml(IEnumerable<WeatherDto> data)
         {
-            var xmlSerializer = new XmlSerializer(typeof(WeatherDto));
+            var weatherList = new WeatherDataList { Items = new List<WeatherDto>(data) };
+
+            var xmlSerializer = new XmlSerializer(typeof(WeatherDataList));
             using var stringWriter = new StringWriter();
-            xmlSerializer.Serialize(stringWriter, data);
+            xmlSerializer.Serialize(stringWriter, weatherList);
             return stringWriter.ToString();
         }
     }
