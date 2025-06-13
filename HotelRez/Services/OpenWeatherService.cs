@@ -2,6 +2,7 @@
 using HotelRez.Models;
 using HotelRez.Models.DTOs;
 using HotelRez.Repositories;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,25 @@ namespace HotelRez.Services
     public class OpenWeatherService : IOpenWeatherService
     {
         private readonly IOpenWeatherRepository _openWeatherRepository;
-        public OpenWeatherService(IOpenWeatherRepository openWeatherRepository)
+        private readonly ILogger<OpenWeatherService> _logger;
+        public OpenWeatherService(IOpenWeatherRepository openWeatherRepository, ILogger<OpenWeatherService> logger)
         {
             _openWeatherRepository = openWeatherRepository;
+            _logger = logger;
         }
         public async Task<bool> GetSaveLocationDataHandler()
         {
-            var data = await GetLocationData();
-            var saveData = MapToDBSchema(data);
-            return await SaveLocationData(saveData);
+            try
+            {
+                var data = await GetLocationData();
+                var saveData = MapToDBSchema(data);
+                return await SaveLocationData(saveData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error: {ex.Message}");
+                return false;
+            }
         }
 
         private async Task<Current?> GetLocationData()
