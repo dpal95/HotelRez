@@ -17,7 +17,7 @@ namespace HotelRez
         }
 
         [Function("WeatherSchedule")]
-        public async Task RunAsync([TimerTrigger("*/10 */1 * * * *"/*"0 0 * * * *"*/)] TimerInfo myTimer)
+        public async Task RunAsync([TimerTrigger("0 0 * * * *")] TimerInfo myTimer)
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
